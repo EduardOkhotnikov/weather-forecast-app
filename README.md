@@ -1,0 +1,185 @@
+# Weather Forecast Application
+
+A Java console application that fetches tomorrow's weather forecast for multiple cities and displays the results in a formatted table.
+
+## Overview
+
+This application retrieves weather data for Chisinau, Madrid, Kyiv, and Amsterdam using the WeatherAPI.com service. The forecast data is presented in a clean table format showing temperature, humidity, wind speed, and wind direction for the next day.
+
+## Features
+
+- **Multi-city forecast**: Retrieves weather data for 4 predefined cities
+- **Table format output**: Clean, formatted table display in console (STDOUT)
+- **Real-time API integration**: Uses WeatherAPI.com for current weather data
+- **Wind direction**: Shows wind direction at 12:00 noon for each city
+- **Error handling**: Graceful handling of API failures and network issues
+
+## Prerequisites
+
+- **Java 11 or higher**
+- **Internet connection** for API access
+- **WeatherAPI.com API key** (free registration required)
+
+## Project Structure
+
+```
+src/main/java/com/weatherapp/
+├── WeatherApp.java              # Main application class
+├── service/
+│   └── WeatherService.java      # Retrofit API interface
+└── model/                       # Data models for JSON mapping
+    ├── ForecastResponse.java
+    ├── Forecast.java
+    ├── ForecastDay.java
+    ├── Day.java
+    └── Hour.java
+```
+
+## Technology Stack
+
+- **Java**: Core programming language
+- **Gradle**: Build automation and dependency management
+- **Retrofit 2**: HTTP client for API communication
+- **Gson**: JSON serialization/deserialization
+- **WeatherAPI.com**: External weather service
+
+## Setup Instructions
+
+### 1. Clone/Download the Project
+```bash
+git clone <repository-url>
+cd weather-forecast-app
+```
+
+### 2. Get API Key
+1. Visit [WeatherAPI.com](https://www.weatherapi.com/)
+2. Register for a free account
+3. Copy your API key from the dashboard
+
+### 3. Configure API Key
+Open `src/main/java/com/weatherapp/WeatherApp.java` and replace:
+```java
+private static final String API_KEY = "YOUR_API_KEY_HERE";
+```
+with your actual API key.
+
+### 4. Build and Run
+```bash
+# Build the project
+./gradlew build
+
+# Run the application
+./gradlew run
+
+# On Windows, use gradlew.bat instead of ./gradlew
+```
+
+## Sample Output
+
+```
+Fetching weather forecast for tomorrow...
+
+Weather Forecast for 2025-09-06
+
+City         | Min°C    | Max°C    | Humidity%  | Wind kph   | Wind Dir
+-------------|----------|----------|------------|------------|----------
+Chisinau     | 14.5     | 30.9     | 30         | 16.2       | NE
+Madrid       | 18.8     | 34.0     | 45         | 24.8       | SSE
+Kyiv         | 16.3     | 27.5     | 41         | 14.0       | NE
+Amsterdam    | 11.6     | 23.3     | 62         | 16.2       | SSE
+```
+
+## Configuration
+
+### Cities
+To modify the cities for weather forecast, edit the `CITIES` list in `WeatherApp.java`:
+```java
+private static final List<String> CITIES = Arrays.asList("Chisinau", "Madrid", "Kyiv", "Amsterdam");
+```
+
+### API Settings
+The application is configured to fetch 2 days of forecast data (today + tomorrow) and uses tomorrow's data (index 1) for the report.
+
+## API Integration Details
+
+- **Endpoint**: `https://api.weatherapi.com/v1/forecast.json`
+- **Parameters**:
+  - `key`: API authentication key
+  - `q`: City name
+  - `days`: Number of forecast days (set to 2)
+- **Wind Direction**: Extracted from hourly data at 12:00 noon
+- **Data Points**: Min/Max temperature (°C), humidity (%), wind speed (kph), wind direction
+
+## Error Handling
+
+The application handles various error scenarios:
+- **Network failures**: Displays error message with city name
+- **API errors**: Shows HTTP status codes and error messages
+- **Invalid API key**: Clear error indication
+- **Missing data**: Displays "N/A" for unavailable fields
+
+## Development
+
+### Requirements Met
+- ✅ Written in Java
+- ✅ Uses Gradle for build management
+- ✅ Integrates with WeatherAPI.com
+- ✅ Outputs data to STDOUT
+- ✅ Displays data in table format with cities as rows
+- ✅ Shows all required data points: Min/Max temp, humidity, wind speed, wind direction
+- ✅ Uses Retrofit for API communication
+
+### Code Quality
+- Clean, readable code with meaningful variable names
+- Proper error handling and logging
+- Modular architecture with separate model classes
+- Professional documentation and comments
+- Single Responsibility Principle followed
+
+## Build Commands
+
+```bash
+# Clean build
+./gradlew clean
+
+# Run tests (if any)
+./gradlew test
+
+# Generate application distribution
+./gradlew build
+
+# Run application directly
+./gradlew run
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**API Key Error**
+```
+API Error for Madrid: 401 Unauthorized
+```
+**Solution**: Verify your API key is correctly set in `WeatherApp.java`
+
+**Network Connection**
+```
+Error fetching data for Kyiv: java.net.UnknownHostException
+```
+**Solution**: Check your internet connection
+
+**Build Failures**
+```
+Could not resolve dependencies
+```
+**Solution**: Ensure you have internet access for dependency downloads
+
+## License
+
+This project is developed as a coding assessment and is intended for educational purposes.
+
+## Author
+
+Eduard Okhotnikov
+
+Weather Forecast Application - Java Console Implementation
